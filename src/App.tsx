@@ -6,8 +6,19 @@ import './global.css'
 import { Task } from './components/Task'
 import { useState } from 'react'
 
+
+interface TaskType {
+  id: number,
+  checked: boolean,
+  content: string
+}
+
 function App() {
+  // taskCount contém um par em que o primeiro elemento é o número total
+  // de tasks e o segundo elemento é o número de tasks completadas
   const [taskCount, setTaskCount] = useState([3,1])
+
+  // tasks é um array que contém objetos do tipo task
   const [tasks, setTasks] = useState([
     {
       id: 1,
@@ -49,14 +60,47 @@ function App() {
     });
     
     
+  }
+
+  const createNewTask = (content: string) => {
+    let highestId = -1
+    tasks.forEach(task => {
+      if (task.id > highestId) {
+        highestId = task.id
+      }
+    })
+
+    // se a lista de tasks estiver vazia, cria uma task com id = 1
+    let newTask: TaskType = {
+      id: 1,
+      checked: false,
+      content: content
     }
+
+    // se não, a task vai ter o maior id existente + 1
+    if (taskCount[0] > 0) {
+      newTask = {
+        id: highestId+1,
+        checked: false,
+        content: content
+      }
+    }
+
+    // Coloca a nova task no começo do array
+    setTasks(() => {
+      return [newTask, ...tasks]
+    });
+    
+    // Aumenta 1 na contagem de tasks totais
+    setTaskCount([taskCount[0]+1,taskCount[1]])
+  }
 
   return (
     <div>
       <Header />
 
       <div className={styles.content}>
-      <Bar />
+      <Bar onCreateNewTask={createNewTask}/>
         <header>
           <div className={styles.tasksCount}>
             <strong className={styles.created}>Tarefas Criadas</strong>
