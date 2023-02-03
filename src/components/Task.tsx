@@ -1,48 +1,40 @@
-import { Circle, Trash } from 'phosphor-react'
+import { CheckCircle, Circle, Trash } from 'phosphor-react'
 import styles from './Task.module.css'
 
-export function Task() {
+interface TaskProps {
+  id: number,
+  checked: boolean,
+  content: string,
+  onDeleteTask: (taskId: number) => void
+}
+export function Task({id, checked, content, onDeleteTask}: TaskProps) {
+  const handleDeleteTask = () => {
+    onDeleteTask(id)
+  }
+
   return(
     <div>
+      {!checked && 
       <div className={styles.task}>
         <button className={styles.circle}>
-          <Circle size={32} />
+          <Circle size={24}/>
         </button>
-        <p>Fazer lista 2 e 3 de PLC</p>
-        <button className={styles.trash}>
+        <p className={styles.normalContent}>{content}</p>
+        <button className={styles.trash} onClick={handleDeleteTask}>
           <Trash size={24}/>
         </button>
-      </div>
+      </div>}
 
-      <div className={styles.task}>
-        <button className={styles.circle}>
-          <Circle size={32} />
+      {checked && 
+      <div className={styles.completedTask}>
+        <button className={styles.checkCircle}>
+          <CheckCircle size={24} weight="fill"/>
         </button>
-        <p>Definir grupo do projeto de Multimídia</p>
-        <button className={styles.trash}>
+        <p className={styles.completedContent}>{content}</p>
+        <button className={styles.trash} onClick={handleDeleteTask}>
           <Trash size={24}/>
         </button>
-      </div>
-
-      <div className={styles.task}>
-        <button className={styles.circle}>
-          <Circle size={32} />
-        </button>
-        <p>Fazer o curso de React da Rocketseat</p>
-        <button className={styles.trash}>
-          <Trash size={24}/>
-        </button>
-      </div>
-
-      <div className={styles.task}>
-        <button className={styles.circle}>
-          <Circle size={32} />
-        </button>
-        <p>Trabalhar na Quest 4 de Projetão</p>
-        <button className={styles.trash}>
-          <Trash size={24}/>
-        </button>
-      </div>
+      </div>}
 
     </div>
   )
