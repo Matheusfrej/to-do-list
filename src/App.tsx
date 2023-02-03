@@ -95,6 +95,35 @@ function App() {
     setTaskCount([taskCount[0]+1,taskCount[1]])
   }
 
+  const checkTask = (id:number) => {
+    // cria uma copia da lista de tasks atual
+    let alteredTasks = [...tasks]
+
+    // armazeno a task que será alterada
+    let editedTask = tasks.find(element => element.id == id)
+
+    // pego o índice do array de onde a task se encontrava
+    let index = tasks.indexOf(editedTask!)
+
+    editedTask!.checked = !editedTask!.checked
+
+    // mudo no array copiado para a task atualizada
+    alteredTasks[index] = editedTask!
+
+    // atualizando a contagem de tasks completadas
+    if (editedTask!.checked == true) {
+      setTaskCount([taskCount[0],taskCount[1]+1])
+    }
+    else {
+      setTaskCount([taskCount[0],taskCount[1]-1])
+    }
+    
+    setTasks(() => {
+      return alteredTasks
+    });
+
+  }
+
   return (
     <div>
       <Header />
@@ -120,6 +149,7 @@ function App() {
               checked={task.checked}
               content={task.content}
               onDeleteTask={deleteTask}
+              onCheckTask={checkTask}
             />
           )
         })}

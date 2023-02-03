@@ -5,18 +5,23 @@ interface TaskProps {
   id: number,
   checked: boolean,
   content: string,
-  onDeleteTask: (taskId: number) => void
+  onDeleteTask: (id: number) => void
+  onCheckTask: (id: number) => void
 }
-export function Task({id, checked, content, onDeleteTask}: TaskProps) {
+export function Task({id, checked, content, onDeleteTask, onCheckTask}: TaskProps) {
   const handleDeleteTask = () => {
     onDeleteTask(id)
   }
+  const handleCheckTask = () => {
+    onCheckTask(id)
+  }
+
 
   return(
     <div>
       {!checked && 
       <div className={styles.task}>
-        <button className={styles.circle}>
+        <button onClick={handleCheckTask} className={styles.circle}>
           <Circle size={24}/>
         </button>
         <p className={styles.normalContent}>{content}</p>
@@ -27,7 +32,7 @@ export function Task({id, checked, content, onDeleteTask}: TaskProps) {
 
       {checked && 
       <div className={`${styles.task} ${styles.completedTask}`}>
-        <button className={styles.checkCircle}>
+        <button onClick={handleCheckTask} className={styles.checkCircle}>
           <CheckCircle size={24} weight="fill"/>
         </button>
         <p className={styles.completedContent}>{content}</p>
