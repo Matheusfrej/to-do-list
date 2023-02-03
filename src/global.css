@@ -43,3 +43,7 @@ body, input, textarea, button {
   line-height: 1.4;
   border: none;
 }
+
+button {
+  cursor: pointer;
+}
