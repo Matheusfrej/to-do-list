@@ -26,9 +26,24 @@
   line-height: 0;
 }
 
+.circle:hover {
+  color: var(--blue-dark);
+
+  transition: color 0.1s, background-color 0.1s;
+
+}
+
 .trash {
   color: var(--gray-300);
   line-height: 0;
+}
+
+.trash:hover {
+  border-radius: 4px;
+  color: var(--red-500);
+  background: var(--gray-400);
+
+  transition: color 0.1s, background-color 0.1s;
 }
 
 .task button {
