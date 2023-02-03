@@ -26,7 +26,7 @@ export function Task({id, checked, content, onDeleteTask}: TaskProps) {
       </div>}
 
       {checked && 
-      <div className={styles.completedTask}>
+      <div className={`${styles.task} ${styles.completedTask}`}>
         <button className={styles.checkCircle}>
           <CheckCircle size={24} weight="fill"/>
         </button>
