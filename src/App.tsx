@@ -2,6 +2,8 @@ import styles from './App.module.css'
 import { Header } from './components/Header'
 import { Bar } from './components/Bar'
 
+import clipboard from './assets/clipboard.svg'
+
 import './global.css'
 import { Task } from './components/Task'
 import { useState } from 'react'
@@ -36,6 +38,66 @@ function App() {
       content: 'Trabalhar na Quest 4 de Projetão'
     },
   ])
+
+  const sortTaskByChecked = (checked: boolean, alteredTasks: TaskType[], index: number) => {
+    // fazendo uma maneira de agrupar as tasks não concluídas e as tasks concluídas
+
+    let i = index + 1
+    let toContinue = true
+    if (checked == true) {
+      // se só houverem tasks não completadas
+      if (taskCount[1] == 0) {
+        [alteredTasks[index], alteredTasks[taskCount[0]-1]] = [alteredTasks[taskCount[0]-1], alteredTasks[index]]
+      }
+  
+      else if (taskCount[0] > taskCount[1] && taskCount[0] > 1 && index < taskCount[0]-1) {
+        while (toContinue) {
+          // se i passar do último índice do array, para
+          if (i == taskCount[0]) {
+            toContinue = false
+          }
+          /* 
+          Se o penúltimo elemento foi false e o próximo é true, é para swapar o elemento
+          que foi checked com esse elemento que era false, para deixar as tasks
+          não concluídas e as concluídas agrupadas
+           */
+          else if (alteredTasks[i].checked == true && alteredTasks[i-1].checked == false) {
+            [alteredTasks[index], alteredTasks[i-1]] = [alteredTasks[i-1], alteredTasks[index]]
+            toContinue = false
+          }
+          i += 1
+        }
+      }
+    }
+    else {
+      // se todas as tasks forem completadas, coloca a task unchecked no início
+      if (taskCount[0] == taskCount[1]) {
+        [alteredTasks[index], alteredTasks[0]] = [alteredTasks[0], alteredTasks[index]]
+      }
+      else if (taskCount[0] > taskCount[1] && taskCount[0] > 1) {
+        i = index - 1
+        while (toContinue) {
+          // se i passar do primeiro índice do array, para
+          if (i == -1) {
+            toContinue = false
+          }
+          /* 
+          Se o i + 1 for false e o i for true, quer dizer que 
+          */
+          else if (alteredTasks[i].checked == false && alteredTasks[i+1].checked == true) {
+            [alteredTasks[index], alteredTasks[i+1]] = [alteredTasks[i+1], alteredTasks[index]]
+            toContinue = false
+            console.log(alteredTasks[i].content)
+            console.log(alteredTasks[i+1].content)
+          }
+          i -= 1
+        }
+      }
+    }
+    
+
+    return alteredTasks
+  }
 
   const deleteTask = (taskToDeleteId: number) => {
     // A função filter mantém na lista aqueles em que a comparação dá true e remove os que dá false
@@ -117,6 +179,8 @@ function App() {
     else {
       setTaskCount([taskCount[0],taskCount[1]-1])
     }
+
+    alteredTasks = [...sortTaskByChecked(editedTask!.checked, alteredTasks, index)]
     
     setTasks(() => {
       return alteredTasks
@@ -138,7 +202,8 @@ function App() {
 
           <div className={styles.tasksCount}>
             <strong className={styles.completed}>Concluídas</strong>
-            <span>{taskCount[1]} de {taskCount[0]}</span>
+            {(taskCount[0] != 0) && <span>{taskCount[1]} de {taskCount[0]}</span>}
+            {(taskCount[0] == 0) && <span>{taskCount[0]}</span>}
           </div>
         </header>
         {tasks.map(task => {
@@ -153,6 +218,15 @@ function App() {
             />
           )
         })}
+        {(taskCount[0] == 0) && 
+          <div className={styles.emptyTasksScreen}>
+            <img src={clipboard} alt="clipboard" />
+            <div>
+              <p><strong>Você ainda não tem tarefas cadastradas</strong></p>
+              <p>Crie tarefas e organize seus itens a fazer</p>
+            </div>
+          </div>
+        }
       </div>
     </div>
   )

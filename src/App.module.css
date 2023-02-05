@@ -35,3 +35,12 @@
 .completed {
   color: var(--purple);
 }
+
+.emptyTasksScreen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 1.5rem;
+  gap: 1rem;
+  color: var(--gray-300);
+}
