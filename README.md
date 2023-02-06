@@ -8,6 +8,6 @@
 ![Screenshot_6](https://user-images.githubusercontent.com/61998444/216948408-7c2ef027-586d-41cb-a668-4f389266dc36.png)
 
 
-## Demonstração da usabilidade
+## Demonstração de uso
 https://user-images.githubusercontent.com/61998444/216948492-8fe85e54-d650-4595-98e5-ba1fbc7acd34.mp4
 
