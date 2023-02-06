@@ -1,5 +1,7 @@
 # Desafio do curso de React da Rocketseat de criar uma To-do List
 
+## Foi provido um protótipo no figma para seguir e um documento com os requisitos da aplicação
+### Além do pedido, adicionei a responsividade para mobile e uma feature de ordenar a lista de tarefas por não completas e completas
 
 ## Web
 ![Screenshot_8](https://user-images.githubusercontent.com/61998444/216948347-14535f26-4541-4755-9723-c555310b140f.png)
